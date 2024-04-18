@@ -1,0 +1,132 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android' // Apply the kotlin-android plugin
+    id 'kotlin-kapt' // Apply the kotlin-kapt plugin
+    id 'kotlin-parcelize' // Apply the kotlin-parcelize plugin
+}
+
+android {
+
+    signingConfigs {
+        key {
+            storeFile file('..\\keystore\\key.jks')
+            storePassword 'Sample@123'
+            keyAlias 'SampleApp'
+            keyPassword 'Sample@123'
+        }
+    }
+
+    namespace 'com.prollery.notetakerapp'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.prollery.notetakerapp"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.key
+        }
+    }
+    flavorDimensions = ["default"]
+    productFlavors {
+        dev {
+            dimension "default"
+            versionCode 1
+            versionName "1.0"
+            buildConfigField "boolean", "isDev", "true"
+            applicationId "com.sample.notetaker"
+            resValue "string", "app_name", "Note Taker"
+            signingConfig signingConfigs.key
+        }
+        prod {
+            dimension "default"
+            versionCode 1
+            versionName "1.0"
+            buildConfigField "boolean", "isDev", "false"
+            applicationId "com.sample.notetaker"
+            applicationIdSuffix ".dev"
+            resValue "string", "app_name", "Note Taker"
+            signingConfig signingConfigs.key
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+    buildFeatures {
+        viewBinding true
+        buildConfig true
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    //Generals
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version" // Kotlin standard library
+
+    //Essentials:
+// 1) NavigationController
+    implementation "androidx.navigation:navigation-fragment-ktx:2.7.7"
+    implementation "androidx.navigation:navigation-ui-ktx:2.7.7"
+
+// 2) ConstraintLayout
+    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
+
+// 3) Coroutine
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
+
+// 4) koin
+    implementation "io.insert-koin:koin-android:3.2.0"
+
+// 5) MaterialLibrary
+    implementation "com.google.android.material:material:1.11.0"
+
+// 6) lifecycleExtensions
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+
+// 7) Glide
+    implementation "com.github.bumptech.glide:glide:4.16.0"
+    annotationProcessor "com.github.bumptech.glide:compiler:4.16.0"
+
+// 8) SDP
+    implementation "com.intuit.sdp:sdp-android:1.0.6"
+
+// 9) AppCompat
+    implementation "androidx.appcompat:appcompat:1.6.1"
+
+
+//Additional:
+//10) OkHttp
+    implementation "com.squareup.okhttp3:okhttp:4.12.0"
+
+//11) Retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.11.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.11.0"
+
+//12) Room DB
+    implementation "androidx.room:room-runtime:2.6.1"
+    kapt "androidx.room:room-compiler:2.6.1"
+    implementation("androidx.room:room-ktx:2.6.1")
+
+}

@@ -1,0 +1,4 @@
+Alias : SampleApp
+Pass:   Sample@123
+Years: 25
+city:  chennai

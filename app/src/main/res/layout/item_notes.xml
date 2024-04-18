@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/_10sdp"
+    app:cardElevation="@dimen/_8sdp"
+    tools:context=".ui.fragments.NotesFragment">
+    <LinearLayout
+        android:id="@+id/lnrRoot"
+        android:layout_margin="@dimen/_5sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ui.fragments.NotesFragment"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/lblTitle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_15sdp"
+            tools:text="Title"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            />
+
+        <TextView
+            android:id="@+id/lblDescription"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_15sdp"
+            tools:text="Desc df hf ghfgh fg  ghjg hjg j"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            />
+        <TextView
+            android:id="@+id/lblCreatedTime"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_15sdp"
+            tools:text="Desc df hf ghfgh fg  ghjg hjg j"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            />
+
+        <TextView
+            android:id="@+id/lblModifiedTime"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_15sdp"
+            tools:text="Desc df hf ghfgh fg  ghjg hjg j"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete"
+            android:textColor="@color/fg"
+            android:backgroundTint="@color/bg"
+            android:textSize="@dimen/_9sdp"
+            />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
