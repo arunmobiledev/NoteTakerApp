@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<layout>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="@dimen/_10sdp"
-    app:cardElevation="@dimen/_8sdp"
+    android:layout_margin="@dimen/_5sdp"
+    app:cardElevation="@dimen/_5sdp"
     tools:context=".ui.fragments.NotesFragment">
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/lnrRoot"
         android:layout_margin="@dimen/_5sdp"
         android:layout_width="match_parent"
@@ -18,49 +18,57 @@
 
         <TextView
             android:id="@+id/lblTitle"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="@dimen/_15sdp"
-            tools:text="Title"
+            android:layout_marginTop="@dimen/_5sdp"
             android:textColor="@color/black"
-            android:textSize="@dimen/_12sdp"
-            />
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintEnd_toStartOf="@+id/btnDelete"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Title" />
 
         <TextView
             android:id="@+id/lblDescription"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_15sdp"
-            tools:text="Desc df hf ghfgh fg  ghjg hjg j"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:minLines="3"
+            android:maxLines="10"
+            android:ellipsize="end"
             android:textColor="@color/black"
             android:textSize="@dimen/_12sdp"
-            />
-        <TextView
-            android:id="@+id/lblCreatedTime"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_15sdp"
-            tools:text="Desc df hf ghfgh fg  ghjg hjg j"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_12sdp"
-            />
+            android:layout_marginBottom="@dimen/_15sdp"
+            app:layout_constraintBottom_toTopOf="@+id/lblModifiedTime"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lblTitle"
+            tools:text="Desc df hf ghfgh fg  ghjg hjg j  t hjgh ghjghj gjh ghj ghjg jhgjh ghjghjg hjgjhg jhghj ghj ghjghg gjhghj ghjghj ggjhghjgj gj gghjghjghjgggj ggjgh gfhfghfghfghfhgffh f f hff hffghfhfghfhgfghfg fgdfgdfghfghfghf ghfhfh fgh fhgfhg f fghfhg fhg fghfhgfhg fhfh fhg fh dfdgfdgfdgfdgf" />
 
         <TextView
             android:id="@+id/lblModifiedTime"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_15sdp"
-            tools:text="Desc df hf ghfgh fg  ghjg hjg j"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_12sdp"
-            />
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/delete"
-            android:textColor="@color/fg"
-            android:backgroundTint="@color/bg"
-            android:textSize="@dimen/_9sdp"
-            />
+            android:lines="1"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Modified On : 12:12:2024_12:23:28" />
 
-    </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnDelete"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/round_delete_24"
+            android:tint="@color/txt_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
+</layout>

@@ -6,4 +6,6 @@
     <color name="bg">#5B00FF</color>
     <color name="txt_hint">#47444E</color>
     <color name="txt_clr">#171717</color>
+    <color name="disabled_txt">#FFD1D1</color>
+    <color name="enabled_txt">#FFFFFF</color>
 </resources>

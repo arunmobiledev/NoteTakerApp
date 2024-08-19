@@ -5,6 +5,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 fun Context.shortToast(msg : String) {
     Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
@@ -45,4 +48,3 @@ fun Fragment.shortSnack(msg : String) {
 fun Fragment.longSnack(msg : String) {
     Snackbar.make(this.requireView(), msg, Snackbar.LENGTH_LONG).setAction("Action", null).show()
 }
-

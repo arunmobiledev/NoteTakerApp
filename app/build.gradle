@@ -68,7 +68,8 @@ android {
         jvmTarget = '17'
     }
     buildFeatures {
-        viewBinding true
+//        viewBinding true
+        dataBinding true
         buildConfig true
     }
 }
@@ -110,7 +111,7 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:4.16.0"
 
 // 8) SDP
-    implementation "com.intuit.sdp:sdp-android:1.0.6"
+    implementation "com.intuit.sdp:sdp-android:1.1.1"
 
 // 9) AppCompat
     implementation "androidx.appcompat:appcompat:1.6.1"
@@ -127,6 +128,12 @@ dependencies {
 //12) Room DB
     implementation "androidx.room:room-runtime:2.6.1"
     kapt "androidx.room:room-compiler:2.6.1"
-    implementation("androidx.room:room-ktx:2.6.1")
+    implementation "androidx.room:room-ktx:2.6.1"
+
+    //13 SQl Cipher for Room database encryption
+    implementation "net.zetetic:android-database-sqlcipher:4.5.3"
+
+
+
 
 }

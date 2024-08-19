@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="notesViewModel"
+            type="com.prollery.notetakerapp.ui.viewmodels.NotesViewModel" />
+    </data>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,16 +15,31 @@
     android:background="@color/bg"
     tools:context=".ui.fragments.AddNotesFragment">
 
-    <ImageView
-        android:id="@+id/imgLogo"
-        android:layout_width="@dimen/_65sdp"
-        android:layout_height="@dimen/_65sdp"
-        android:src="@drawable/rounded_add_notes_24"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
+    <TextView
+        android:id="@+id/lblCreatedTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_11sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline"
-        app:tint="@color/fg" />
+        tools:text="Created On : 12:12:2024_12:23:28" />
+
+    <TextView
+        android:id="@+id/lblModifiedTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_11sdp"
+        app:layout_constraintTop_toBottomOf="@+id/lblCreatedTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Modified On : 12:12:2024_12:23:28" />
 
     <EditText
         android:id="@+id/txtTitle"
@@ -26,15 +49,17 @@
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginEnd="@dimen/_15sdp"
         android:padding="@dimen/_10sdp"
-        android:background="@color/white"
+        android:background="@color/enabled_txt"
+        android:text="@={notesViewModel.title}"
         android:textColorHint="@color/txt_hint"
         android:textColor="@color/txt_clr"
         android:hint="@string/enter_title"
         android:inputType="textMultiLine"
         android:lines="1"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgLogo" />
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <EditText
         android:id="@+id/txtDesc"
@@ -44,7 +69,8 @@
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginEnd="@dimen/_15sdp"
         android:padding="@dimen/_10sdp"
-        android:background="@color/white"
+        android:background="@color/enabled_txt"
+        android:text="@={notesViewModel.description}"
         android:gravity="start"
         android:hint="@string/enter_content"
         android:textColorHint="@color/txt_hint"
@@ -61,7 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_percent="0.2" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSubmit"
@@ -71,8 +97,10 @@
         android:backgroundTint="@color/fg"
         android:layout_marginTop="@dimen/_25sdp"
         android:text="@string/submit"
+        android:onClick="@{() -> notesViewModel.onSubmit()}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtDesc" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

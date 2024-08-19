@@ -4,7 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.prollery.notetakerapp.BuildConfig
 import com.prollery.notetakerapp.model.Note
+import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
 
 @Database(entities = [Note::class], version = 2)
 abstract class PrimaryDatabase : RoomDatabase() {
@@ -12,22 +15,22 @@ abstract class PrimaryDatabase : RoomDatabase() {
     abstract fun noteDao() : NoteDao
 
     companion object {
-        @Volatile
-        private var INSTANCE: PrimaryDatabase? = null
 
         fun getDatabase(context: Context): PrimaryDatabase {
-            val tempInstance = INSTANCE
-            if (tempInstance != null) {
-                return tempInstance
-            }
-            synchronized(this) {
-                val instance = Room.databaseBuilder(
+            val passphrase: ByteArray = SQLiteDatabase.getBytes("SimplePass123".toCharArray())
+            val factory = SupportFactory(passphrase)
+            return if (BuildConfig.DEBUG) {
+                Room.databaseBuilder(
                     context.applicationContext,
                     PrimaryDatabase::class.java,
-                    "primary_database"
+                    "primary_database.sqlite"
                 ).build()
-                INSTANCE = instance
-                return instance
+            } else {
+                Room.databaseBuilder(
+                    context.applicationContext,
+                    PrimaryDatabase::class.java,
+                    "secured_database.sqlite"
+                ).openHelperFactory(factory).build()
             }
         }
     }

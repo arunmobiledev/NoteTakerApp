@@ -8,12 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.prollery.notetakerapp.common.extensions.getDefaultTime
+import com.prollery.notetakerapp.R
+import com.prollery.notetakerapp.common.extensions.disable
+import com.prollery.notetakerapp.common.extensions.enable
+import com.prollery.notetakerapp.common.extensions.getDateTime
 import com.prollery.notetakerapp.databinding.FragmentAddNotesBinding
 import com.prollery.notetakerapp.model.Note
 import com.prollery.notetakerapp.ui.viewmodels.NotesViewModel
 import org.koin.android.ext.android.inject
-import java.util.Date
+import org.koin.core.parameter.parametersOf
 
 /**
  * AddNotesFragment
@@ -21,7 +24,7 @@ import java.util.Date
 class AddNotesFragment : Fragment() {
 
     private lateinit var binding : FragmentAddNotesBinding
-    private val notesViewModel : NotesViewModel by inject()
+    private val notesViewModel : NotesViewModel by inject{parametersOf(navController)}
     private lateinit var navController: NavController
     private var currentNote : Note? = null
 
@@ -43,30 +46,41 @@ class AddNotesFragment : Fragment() {
             arguments?.getParcelable("note")
         }
 
-        currentNote?.run {
-            binding.txtTitle.setText(title)
-            binding.txtDesc.setText(description)
+        binding.notesViewModel = notesViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        notesViewModel.currentNote = currentNote
+
+        notesViewModel.currentNote?.id?.run {
+            notesViewModel.editModeEnabled.postValue(false)
+        } ?: run {
+            notesViewModel.editModeEnabled.postValue(true)
         }
 
-        binding.btnSubmit.setOnClickListener {
-            currentNote?.run {
-                title = binding.txtTitle.text.toString().trim()
-                description = binding.txtDesc.text.toString().trim()
-                modifiedTimestamp = Date().getDefaultTime()
-                modifiedTimestampInMillis = System.currentTimeMillis()
-                notesViewModel.updateNote(this)
-            } ?: run {
-                val note = Note(title = binding.txtTitle.text.toString().trim()
-                    , description = binding.txtDesc.text.toString().trim()
-                    , createdTimestamp = Date().getDefaultTime()
-                    , createdTimestampInMillis = System.currentTimeMillis()
-                    , modifiedTimestamp = Date().getDefaultTime()
-                    , modifiedTimestampInMillis = System.currentTimeMillis()
-                )
-                notesViewModel.createNote(note)
-            }
-            navController.popBackStack()
+        notesViewModel.editModeEnabled.observe(viewLifecycleOwner) {
+            if(it) enableEditMode() else disableEditMode(notesViewModel.currentNote!!)
         }
+
+    }
+
+    private fun disableEditMode(note : Note) {
+        binding.txtTitle.setText(note.title)
+        binding.txtDesc.setText(note.description)
+        binding.txtTitle.disable()
+        binding.txtDesc.disable()
+        binding.btnSubmit.text = getString(R.string.edit)
+        binding.lblCreatedTime.text = getString(R.string.created_on,
+            getDateTime(note.createdTimestampInMillis)
+        )
+        binding.lblModifiedTime.text = getString(R.string.modified_on,
+            getDateTime(note.modifiedTimestampInMillis)
+        )
+    }
+
+    private fun enableEditMode() {
+        binding.txtTitle.enable()
+        binding.txtDesc.enable()
+        binding.btnSubmit.text = getString(R.string.submit)
+        binding.btnSubmit.tag = null
     }
 
 }

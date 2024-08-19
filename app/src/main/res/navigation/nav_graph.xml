@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/notesFragment"
         android:name="com.prollery.notetakerapp.ui.fragments.NotesFragment"
-        android:label="item_notes"
+        android:label="@string/notes"
         tools:layout="@layout/item_notes" >
         <action
             android:id="@+id/action_notesFragment_to_addNotesFragment"
@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/addNotesFragment"
         android:name="com.prollery.notetakerapp.ui.fragments.AddNotesFragment"
-        android:label="fragment_add_notes"
+        android:label="@string/add_notes"
         tools:layout="@layout/fragment_add_notes" />
 
 

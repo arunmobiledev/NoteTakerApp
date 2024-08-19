@@ -3,30 +3,30 @@ package com.prollery.notetakerapp.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.prollery.notetakerapp.common.interfaces.OnItemClickListener
+import com.prollery.notetakerapp.common.extensions.getDate
 import com.prollery.notetakerapp.databinding.ItemNotesBinding
 import com.prollery.notetakerapp.model.Note
 import com.prollery.notetakerapp.ui.viewmodels.NotesViewModel
 
-class NotesAdapter(_lstNotes : List<Note>, val notesViewModel: NotesViewModel, val onItemClickListener: OnItemClickListener) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
+class NotesAdapter(val notesViewModel: NotesViewModel) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 
-    private var lstNotes: List<Note> = _lstNotes
+    var lstNotes: List<Note> = listOf()
+
     inner class ViewHolder(private val binding: ItemNotesBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(note: Note) {
             binding.lblTitle.text = note.title
             binding.lblDescription.text = note.description
-            binding.lblCreatedTime.text = note.createdTimestamp
-            binding.lblModifiedTime.text = note.modifiedTimestamp
+            binding.lblModifiedTime.text = getDate(note.modifiedTimestampInMillis)
             binding.lnrRoot.tag = note
             binding.btnDelete.tag = note
             binding.lnrRoot.setOnClickListener {
                 val note1 = it.tag as Note
-                onItemClickListener.onItemClick(note1.id, "btnUpdate")
+                notesViewModel.notesItemClickListener.onItemClick(note1.id, "btnUpdate")
             }
 
             binding.btnDelete.setOnClickListener {
                 val note1 = it.tag as Note
-                onItemClickListener.onItemClick(note1.id, "btnDelete")
+                notesViewModel.notesItemClickListener.onItemClick(note1.id, "btnDelete")
             }
         }
     }

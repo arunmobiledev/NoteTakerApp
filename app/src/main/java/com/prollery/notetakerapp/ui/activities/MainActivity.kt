@@ -8,20 +8,25 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.navigation.NavController
+import androidx.room.RoomDatabase
 import com.prollery.notetakerapp.R
 import com.prollery.notetakerapp.common.extensions.navigateSafely
 import com.prollery.notetakerapp.databinding.ActivityMainBinding
+import com.prollery.notetakerapp.repo.PrimaryDatabase
 import com.prollery.notetakerapp.ui.viewmodels.NotesViewModel
 import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private val notesViewModel : NotesViewModel by inject()
+    private lateinit var navController: NavController
+    private val notesViewModel : NotesViewModel by inject { parametersOf(navController) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -29,23 +34,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.toolbar.title = getString(R.string.app_name)
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
-
-        binding.fab.setOnClickListener { view ->
-//            val random = Random().nextInt()
-//            val note = Note(title = "Note $random"
-//                , description = "Desc sdfsdf sf g  $random $random $random"
-//                , createdTimestamp = System.currentTimeMillis().toString()
-//                , createdTimestampInMillis = System.currentTimeMillis()
-//                , modifiedTimestamp = System.currentTimeMillis().toString()
-//                , modifiedTimestampInMillis = System.currentTimeMillis()
-//            )
-//            notesViewModel.createNote(note)
-
-            navController.navigateSafely(R.id.action_notesFragment_to_addNotesFragment)
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -69,4 +60,10 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }
+
+    override fun onStop() {
+        super.onStop()
+        notesViewModel.callNoteDatabaseExportCheckpoint()
+    }
+
 }
